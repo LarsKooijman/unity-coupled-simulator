@@ -111,8 +111,6 @@ public class PedestrianUnit : NetworkBehaviour {
 
         // Now let the clients know the correct position of this object.
         RpcUpdateVelocity( velocity, transform.position);
-
-        Debug.Log("Moved pedestrian");
     }
 
     [ClientRpc]

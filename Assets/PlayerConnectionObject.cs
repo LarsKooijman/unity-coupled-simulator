@@ -17,33 +17,6 @@ public class PlayerConnectionObject : NetworkBehaviour {
             return;
         }
 
-        //camera1 = GameObject.Find("Camera1");
-        //camera2 = GameObject.Find("Camera2");
-
-        //if (isServer)
-        //{
-        //    camera1.enabled = true;
-        //    camera2.enabled = false;
-        //}
-        //else
-        //{
-        //    camera1.enabled = false;
-        //    camera2.enabled = true;
-        //}
-
-        // Since the PlayerConnectionObject is invisible and not part of the world,
-        // give me something physical to move around!
-
-
-
-        // Instantiate() only creates an object on the LOCAL COMPUTER.
-        // Even if it has a NetworkIdentity is still will NOT exist on
-        // the network (and therefore not on any other client) UNLESS
-        // NetworkServer.Spawn() is called on this object.
-
-        //Instantiate(PlayerUnitPrefab);
-
-        // Command (politely) the server to SPAWN our unit
         if (isServer)
         {
             Debug.Log("PlayerConnectionObject::Start -- Spawning pedestrian.");
@@ -73,11 +46,6 @@ public class PlayerConnectionObject : NetworkBehaviour {
         {
             return;
         }
-
-        //if( Input.GetKeyDown(KeyCode.S) )
-        //{
-        //    CmdSpawnMyUnit();
-        //}
 
         if( Input.GetKeyDown(KeyCode.Q) )
         {
@@ -143,15 +111,3 @@ public class PlayerConnectionObject : NetworkBehaviour {
         // Tell all the client what this player's name now is.
         //RpcChangePlayerName(PlayerName);
     }
-
-    //////////////////////////// RPC
-    // RPCs are special functions that ONLY get executed on the clients.
-
-/*    [ClientRpc]
-    void RpcChangePlayerName(string n)
-    {
-        Debug.Log("RpcChangePlayerName: We were asked to change the player name on a particular PlayerConnectionObject: " + n);
-        PlayerName = n;
-    }
-
-*/}
