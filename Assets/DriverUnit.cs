@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 // This could be a character in an FPS, a zergling in a RTS
 // Or a scout in a TBS
 
-public class PlayerUnit : NetworkBehaviour {
+public class DriverUnit : NetworkBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -111,6 +111,8 @@ public class PlayerUnit : NetworkBehaviour {
 
         // Now let the clients know the correct position of this object.
         RpcUpdateVelocity( velocity, transform.position);
+
+        Debug.Log("Moved driver");
     }
 
     [ClientRpc]

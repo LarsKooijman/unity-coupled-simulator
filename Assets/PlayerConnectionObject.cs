@@ -5,6 +5,9 @@ using UnityEngine.Networking;
 
 public class PlayerConnectionObject : NetworkBehaviour {
 
+    //public Camera camera1;
+    //public Camera camera2;
+
 	// Use this for initialization
 	void Start () {
         // Is this actually my own local PlayerConnectionObject?
@@ -14,10 +17,24 @@ public class PlayerConnectionObject : NetworkBehaviour {
             return;
         }
 
+        //camera1 = GameObject.Find("Camera1");
+        //camera2 = GameObject.Find("Camera2");
+
+        //if (isServer)
+        //{
+        //    camera1.enabled = true;
+        //    camera2.enabled = false;
+        //}
+        //else
+        //{
+        //    camera1.enabled = false;
+        //    camera2.enabled = true;
+        //}
+
         // Since the PlayerConnectionObject is invisible and not part of the world,
         // give me something physical to move around!
 
-        Debug.Log("PlayerConnectionObject::Start -- Spawning my own personal unit.");
+
 
         // Instantiate() only creates an object on the LOCAL COMPUTER.
         // Even if it has a NetworkIdentity is still will NOT exist on
@@ -27,10 +44,20 @@ public class PlayerConnectionObject : NetworkBehaviour {
         //Instantiate(PlayerUnitPrefab);
 
         // Command (politely) the server to SPAWN our unit
-        CmdSpawnMyUnit();
-	}
+        if (isServer)
+        {
+            Debug.Log("PlayerConnectionObject::Start -- Spawning pedestrian.");
+            CmdSpawnPedestrian();
+        }
+        else if (isClient)
+        {
+            Debug.Log("PlayerConnectionObject::Start -- Spawning driver.");
+            CmdSpawnDriver();
+        }
+    }
 
-    public GameObject PlayerUnitPrefab;
+    public GameObject PedestrianPrefab;
+    public GameObject DriverPrefab;
 
     // SyncVars are variables where if their value changes on the SERVER, then all clients
     // are automatically informed of the new value.
@@ -47,10 +74,10 @@ public class PlayerConnectionObject : NetworkBehaviour {
             return;
         }
 
-        if( Input.GetKeyDown(KeyCode.S) )
-        {
-            CmdSpawnMyUnit();
-        }
+        //if( Input.GetKeyDown(KeyCode.S) )
+        //{
+        //    CmdSpawnMyUnit();
+        //}
 
         if( Input.GetKeyDown(KeyCode.Q) )
         {
@@ -77,10 +104,23 @@ public class PlayerConnectionObject : NetworkBehaviour {
     // Commands are special functions that ONLY get executed on the server.
 
     [Command]
-    void CmdSpawnMyUnit()
+    void CmdSpawnPedestrian()
     {
         // We are guaranteed to be on the server right now.
-        GameObject go = Instantiate(PlayerUnitPrefab);
+        GameObject go = Instantiate(PedestrianPrefab);
+
+        //go.GetComponent<NetworkIdentity>().AssignClientAuthority( connectionToClient );
+
+        // Now that the object exists on the server, propagate it to all
+        // the clients (and also wire up the NetworkIdentity)
+        NetworkServer.SpawnWithClientAuthority(go, connectionToClient);
+    }
+
+    [Command]
+    void CmdSpawnDriver()
+    {
+        // We are guaranteed to be on the server right now.
+        GameObject go = Instantiate(DriverPrefab);
 
         //go.GetComponent<NetworkIdentity>().AssignClientAuthority( connectionToClient );
 
