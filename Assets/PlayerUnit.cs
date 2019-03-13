@@ -61,23 +61,39 @@ public class PlayerUnit : NetworkBehaviour {
         transform.Translate( velocity * Time.deltaTime );
 
 
-        if( Input.GetKeyDown(KeyCode.Space) )
+        //if( Input.GetKeyDown(KeyCode.Space) )
+        //{
+        //    velocity = new Vector3(0, 0, 1);
+        //    CmdUpdateVelocity(velocity, transform.position);
+        //}
+
+        Vector3 pos = transform.position;
+
+        if (Input.GetKey(KeyCode.UpArrow))
         {
-            this.transform.Translate( 0, 1, 0 );
+            velocity = new Vector3(0, 1, 0);
+            CmdUpdateVelocity(velocity, transform.position);
+        }
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            velocity = new Vector3(0, -1, 0);
+            CmdUpdateVelocity(velocity, transform.position);
+        }
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            velocity = new Vector3(1, 0, 0);
+            CmdUpdateVelocity(velocity, transform.position);
+        }
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            velocity = new Vector3(-1, 0, 0);
+            CmdUpdateVelocity(velocity, transform.position);
         }
 
-        if(Input.GetKeyDown(KeyCode.D))
+
+        if (Input.GetKeyDown(KeyCode.D))
         {
             Destroy(gameObject);
-        }
-
-        if( /* some input */ true )
-        {
-            // The player is asking us to change our direction/speed (i.e. velocity)
-
-            velocity = new Vector3(1, 0, 0);
-
-            CmdUpdateVelocity(velocity, transform.position);
         }
 
 	}
