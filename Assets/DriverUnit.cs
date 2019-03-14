@@ -112,6 +112,8 @@ public class DriverUnit : NetworkBehaviour {
 
         // Now let the clients know the correct position of this object.
         RpcUpdateVelocity( velocity, transform.position);
+
+        //Debug.Log("Movement of driver");
     }
 
     [ClientRpc]

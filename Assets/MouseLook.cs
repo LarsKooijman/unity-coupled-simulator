@@ -64,11 +64,10 @@ public class MouseLook : MonoBehaviour
 
     void Start()
     {
-        //if(!networkView.isMine)
+        //if(!GetComponent<NetworkView>().isMine)
         //enabled = false;
-
-        // Make the rigid body not change rotation
-        //if (rigidbody)
-        //rigidbody.freezeRotation = true;
+        ////Make the rigid body not change rotation
+        //if (GetComponent<Rigidbody>())
+        //GetComponent<Rigitbody>.freezeRotation = true;
     }
 }
