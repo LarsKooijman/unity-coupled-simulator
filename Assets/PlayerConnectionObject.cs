@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class PlayerConnectionObject : NetworkBehaviour {
+public class PlayerConnectionObject : NetworkBehaviour
+{
 
     //public Camera camera1;
     //public Camera camera2;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         // Is this actually my own local PlayerConnectionObject?
-        if( isLocalPlayer == false )
+        if (isLocalPlayer == false)
         {
             // This object belongs to another player.
             return;
@@ -34,20 +36,21 @@ public class PlayerConnectionObject : NetworkBehaviour {
 
     // SyncVars are variables where if their value changes on the SERVER, then all clients
     // are automatically informed of the new value.
-    [SyncVar(hook="OnPlayerNameChanged")]
+    [SyncVar(hook = "OnPlayerNameChanged")]
     public string PlayerName = "Anonymous";
-	
-	// Update is called once per frame
-	void Update () {
-		// Remember: Update runs on EVERYONE's computer, whether or not they own this
+
+    // Update is called once per frame
+    void Update()
+    {
+        // Remember: Update runs on EVERYONE's computer, whether or not they own this
         // particular player object.
 
-        if( isLocalPlayer == false )
+        if (isLocalPlayer == false)
         {
             return;
         }
 
-        if( Input.GetKeyDown(KeyCode.Q) )
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             string n = "Quill" + Random.Range(1, 100);
 
@@ -55,17 +58,17 @@ public class PlayerConnectionObject : NetworkBehaviour {
             CmdChangePlayerName(n);
         }
 
-	}
+    }
 
     void OnPlayerNameChanged(string newName)
     {
-        Debug.Log("OnPlayerNameChanged: OldName: "+PlayerName+"   NewName: " + newName);
+        Debug.Log("OnPlayerNameChanged: OldName: " + PlayerName + "   NewName: " + newName);
 
         // WARNING:  If you use a hook on a SyncVar, then our local value does NOT get automatically
         // updated.
         PlayerName = newName;
 
-        gameObject.name = "PlayerConnectionObject ["+newName+"]";
+        gameObject.name = "PlayerConnectionObject [" + newName + "]";
     }
 
     //////////////////////////// COMMANDS
@@ -111,3 +114,4 @@ public class PlayerConnectionObject : NetworkBehaviour {
         // Tell all the client what this player's name now is.
         //RpcChangePlayerName(PlayerName);
     }
+}

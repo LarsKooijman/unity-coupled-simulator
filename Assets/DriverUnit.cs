@@ -69,14 +69,15 @@ public class DriverUnit : NetworkBehaviour {
 
         Vector3 pos = transform.position;
 
+        //TODO: udpate movement with realistsic physics
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            velocity = new Vector3(0, 1, 0);
+            velocity = new Vector3(0, 0, 1);
             CmdUpdateVelocity(velocity, transform.position);
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            velocity = new Vector3(0, -1, 0);
+            velocity = new Vector3(0, 0, -1);
             CmdUpdateVelocity(velocity, transform.position);
         }
         if (Input.GetKey(KeyCode.RightArrow))
